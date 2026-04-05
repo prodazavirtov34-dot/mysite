@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SlapotaG | Web Development</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css">
+    <style>
+        /* --- GLOBAL STYLES --- */
+        :root {
+            --bg-dark: #0a0512;
+            --bg-card: rgba(30, 10, 60, 0.7);
+            --primary: #8b00ff;
+            --primary-bright: #b026ff;
+            --primary-glow: #d400ff;
+            --text-main: #ffffff;
+            --text-muted: #b8b8ff;
+            --border: rgba(176, 38, 255, 0.4);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #1a0033 0%, #0a0512 50%, #2d004d 100%);
+            color: var(--text-main);
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+
+        .top-glow {
+            position: fixed;
+            top: -200px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 800px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(176, 38, 255, 0.6) 0%, rgba(139, 0, 255, 0.3) 40%, transparent 70%);
+            z-index: -1;
+            pointer-events: none;
+            animation: pulse 4s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 0.6; transform: translateX(-50%) scale(1); }
+            50% { opacity: 1; transform: translateX(-50%) scale(1.1); }
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            position: relative;
+        }
+
+        header {
+            text-align: center;
+            padding: 60px 0 60px;
+            position: relative;
+        }
+
+        .logo-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--primary-bright), var(--primary));
+            padding: 10px 30px;
+            border-radius: 50px;
+            font-weight: 800;
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            box-shadow: 0 0 40px rgba(176, 38, 255, 0.8), 0 0 80px rgba(139, 0, 255, 0.4);
+            animation: glow 2s ease-in-out infinite alternate;
+        }
+
+        @keyframes glow {
+            from { box-shadow: 0 0 30px rgba(176, 38, 255, 0.8), 0 0 60px rgba(139, 0, 255, 0.4); }
+            to { box-shadow: 0 0 50px rgba(212, 0, 255, 1), 0 0 100px rgba(176, 38, 255, 0.6); }
+        }
+
+        h1 {
+            font-size: 3.5rem;
+            font-weight: 900;
+            line-height: 1.1;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, #fff 0%, #e0b0ff 50%, #b026ff 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 60px rgba(176, 38, 255, 0.5);
+        }
+
+        .subtitle {
+            color: var(--text-muted);
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto 30px;
+            line-height: 1.6;
+        }
+
+        .btn-main {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            background: linear-gradient(135deg, #b026ff, #8b00ff);
+            color: white;
+            padding: 16px 40px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 1.1rem;
+            box-shadow: 0 0 30px rgba(176, 38, 255, 0.8), 0 0 60px rgba(139, 0, 255, 0.5);
+            transition: all 0.3s ease;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .btn-main:hover {
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 0 50px rgba(212, 0, 255, 1), 0 0 100px rgba(176, 38, 255, 0.8);
+        }
+
+        .btn-main svg {
+            width: 24px;
+            height: 24px;
+            fill: white;
+            filter: drop-shadow(0 0 5px rgba(255,255,255,0.8));
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 15px;
+            margin-bottom: 60px;
+            padding: 30px;
+            background: var(--bg-card);
+            border: 2px solid var(--border);
+            border-radius: 24px;
+            backdrop-filter: blur(20px);
+            box-shadow: 0 20px 60px rgba(139, 0, 255, 0.3);
+        }
+
+        .tag {
+            background: linear-gradient(135deg, rgba(176, 38, 255, 0.3), rgba(139, 0, 255, 0.2));
+            border: 2px solid rgba(176, 38, 255, 0.5);
+            padding: 12px 20px;
+            border-radius: 16px;
+            font-size: 0.95rem;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .tag:hover {
+            background: linear-gradient(135deg, rgba(176, 38, 255, 0.5), rgba(139, 0, 255, 0.4));
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(176, 38, 255, 0.5);
+        }
+        
+        .tag::before {
+            content: '▸';
+            color: #b026ff;
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+
+        .tech-section {
+            margin-bottom: 60px;
+            text-align: center;
+        }
+
+        .tech-section h2 {
+            font-size: 2rem;
+            margin-bottom: 30px;
+            background: linear-gradient(135deg, #fff, #b026ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .tech-grid {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+            padding: 30px;
+            background: var(--bg-card);
+            border: 2px solid var(--border);
+            border-radius: 24px;
+            backdrop-filter: blur(20px);
+        }
+
+        .tech-icon {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, rgba(176, 38, 255, 0.2), rgba(139, 0, 255, 0.1));
+            border: 3px solid rgba(176, 38, 255, 0.6);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .tech-icon::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255,255,255,0.1), transparent);
+            transform: rotate(45deg);
+            transition: all 0.5s;
+            opacity: 0;
+        }
+
+        .tech-icon:hover::before {
+            animation: shine 0.5s ease-in-out;
+        }
+
+        @keyframes shine {
+            0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); opacity: 0; }
+            50% { opacity: 1; }
+            100% { transform: translateX(100%) translateY(100%) rotate(45deg); opacity: 0; }
+        }
+
+        .tech-icon:hover {
+            transform: translateY(-8px) scale(1.1);
+            border-color: #b026ff;
+            box-shadow: 0 15px 40px rgba(176, 38, 255, 0.6), 0 0 20px rgba(212, 0, 255, 0.4);
+        }
+
+        .tech-icon i {
+            font-size: 3rem;
+        }
+
+        .tech-icon.html { color: #e34c26; }
+        .tech-icon.css { color: #264de4; }
+        .tech-icon.js { color: #f0db4f; }
+        .tech-icon.php { color: #777bb4; }
+        .tech-icon.python { color: #3776ab; }
+        .tech-icon.java { color: #007396; }
+        .tech-icon.c { color: #03599c; }
+        .tech-icon.csharp { color: #9b4f96; }
+        .tech-icon.cpp { color: #00599c; }
+        .tech-icon.swift { color: #fa7343; }
+
+        .features-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-bottom: 60px;
+        }
+
+        .feature-block {
+            background: var(--bg-card);
+            border: 2px solid var(--border);
+            border-radius: 24px;
+            padding: 30px;
+            backdrop-filter: blur(20px);
+            box-shadow: 0 20px 60px rgba(139, 0, 255, 0.3);
+        }
+
+        .feature-block h3 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            color: #b026ff;
+            text-shadow: 0 0 20px rgba(176, 38, 255, 0.5);
+        }
+
+        .feature-block p {
+            color: var(--text-muted);
+            font-size: 1rem;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        .chat-bubble {
+            background: rgba(176, 38, 255, 0.2);
+            border: 2px solid rgba(176, 38, 255, 0.4);
+            padding: 15px 20px;
+            border-radius: 16px;
+            margin-bottom: 12px;
+            font-size: 0.9rem;
+            color: #fff;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .chat-bubble.user {
+            background: linear-gradient(135deg, rgba(176, 38, 255, 0.4), rgba(139, 0, 255, 0.3));
+            text-align: right;
+            margin-left: 20%;
+            border-color: #b026ff;
+        }
+
+        .chat-bubble.bot {
+            margin-right: 20%;
+            border-color: rgba(176, 38, 255, 0.4);
+        }
+
+        .code-section {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-bottom: 60px;
+            align-items: center;
+        }
+
+        .code-window {
+            background: linear-gradient(135deg, #1a0033, #0f0518);
+            border: 3px solid var(--border);
+            border-radius: 20px;
+            padding: 25px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.85rem;
+            color: #e0b0ff;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 20px 60px rgba(139, 0, 255, 0.4);
+        }
+
+        .code-window::after {
+            content: '';
+            position: absolute;
+            top: 0; right: 0;
+            width: 150px; height: 150px;
+            background: radial-gradient(circle, rgba(176, 38, 255, 0.3), transparent);
+        }
+
+        .code-line { margin-bottom: 8px; display: block; }
+        .kw { color: #ff79c6; font-weight: bold; }
+        .str { color: #50fa7b; }
+        .func { color: #8be9fd; }
+        .num { color: #bd93f9; }
+
+        .footer-cta {
+            text-align: center;
+            padding: 60px 30px;
+            background: linear-gradient(135deg, rgba(176, 38, 255, 0.2), rgba(139, 0, 255, 0.1));
+            border: 3px solid var(--border);
+            border-radius: 30px;
+            backdrop-filter: blur(20px);
+            box-shadow: 0 30px 80px rgba(139, 0, 255, 0.5);
+        }
+
+        .price-tag {
+            display: inline-block;
+            background: linear-gradient(135deg, #b026ff, #8b00ff);
+            color: white;
+            padding: 12px 30px;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 25px;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 0 0 30px rgba(176, 38, 255, 0.8);
+            animation: glow 2s ease-in-out infinite alternate;
+        }
+
+        .footer-cta h2 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, #fff, #e0b0ff, #b026ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .footer-cta p {
+            color: var(--text-muted);
+            margin-bottom: 30px;
+            font-size: 1.1rem;
+            line-height: 1.6;
+        }
+
+        @media (max-width: 768px) {
+            h1 { font-size: 2.2rem; }
+            .features-row, .code-section { grid-template-columns: 1fr; }
+            .tech-icon { width: 60px; height: 60px; }
+            .tech-icon i { font-size: 2.2rem; }
+        }
+
+        .fade-in {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: all 0.8s ease;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="top-glow"></div>
+
+    <div class="container">
+        
+        <!-- HEADER -->
+        <header class="fade-in">
+            <div class="logo-badge">⚡ SlapotaG</div>
+            <h1>Веб-разработка,<br>работающая годами</h1>
+            <p class="subtitle">
+                Реализую проекты разной сложности — от ботов и лендингов до полноценных систем. 
+                Опыт с 2017 года — десятки проектов.
+            </p>
+            <!-- ✅ ИСПРАВЛЕНО: ссылка на твой профиль -->
+            <a href="https://t.me/SlapotaG" target="_blank" class="btn-main">
+                <svg viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12s5.37 12 12 12 12-5.37 12-12S18.63 0 12 0zm5.53 8.15l-1.8 8.49c-.13.6-.5.75-.99.46l-2.75-2.02-1.33 1.28c-.15.15-.27.27-.56.27l.2-2.8 5.1-4.6c.22-.2-.05-.3-.34-.12l-6.3 3.96-2.71-.85c-.59-.18-.6-.59.12-.87l10.59-4.08c.49-.18.92.12.77.88z"/></svg>
+                Написать в Telegram
+            </a>
+        </header>
+
+        <!-- SERVICES -->
+        <div class="services-grid fade-in">
+            <div class="tag">Лендинги и сайты-визитки</div>
+            <div class="tag">Backend-решения и API под нагрузку</div>
+            <div class="tag">Корпоративные сайты и интернет-магазины</div>
+            <div class="tag">Настройка и администрирование серверов</div>
+            <div class="tag">Боты и Mini Apps в Telegram</div>
+            <div class="tag">Парсеры и автоматизация процессов</div>
+        </div>
+
+        <!-- TECH STACK -->
+        <div class="tech-section fade-in">
+            <h2>🛠 Технологии, которые я использую</h2>
+            <div class="tech-grid">
+                <div class="tech-icon html" title="HTML5">
+                    <i class="devicon-html5-plain colored"></i>
+                </div>
+                <div class="tech-icon css" title="CSS3">
+                    <i class="devicon-css3-plain colored"></i>
+                </div>
+                <div class="tech-icon js" title="JavaScript">
+                    <i class="devicon-javascript-plain colored"></i>
+                </div>
+                <div class="tech-icon php" title="PHP">
+                    <i class="devicon-php-plain colored"></i>
+                </div>
+                <div class="tech-icon python" title="Python">
+                    <i class="devicon-python-plain colored"></i>
+                </div>
+                <div class="tech-icon java" title="Java">
+                    <i class="devicon-java-plain colored"></i>
+                </div>
+                <div class="tech-icon c" title="C">
+                    <i class="devicon-c-plain colored"></i>
+                </div>
+                <div class="tech-icon csharp" title="C#">
+                    <i class="devicon-csharp-plain colored"></i>
+                </div>
+                <div class="tech-icon cpp" title="C++">
+                    <i class="devicon-cplusplus-plain colored"></i>
+                </div>
+                <div class="tech-icon swift" title="Swift">
+                    <i class="devicon-swift-plain colored"></i>
+                </div>
+            </div>
+        </div>
+
+        <!-- FEATURES -->
+        <div class="features-row">
+            <div class="feature-block fade-in">
+                <h3>💎 Бесплатная консультация</h3>
+                <p>Помогаю с выбором стека, аудитом кода, оптимизацией и разбором проектов.</p>
+                <div class="chat-bubble user">Можешь помочь составить ТЗ для заказа?</div>
+                <div class="chat-bubble bot">Конечно, с чем будем работать?</div>
+            </div>
+            <div class="feature-block fade-in">
+                <h3>🎯 Индивидуальный подход</h3>
+                <p>Погружаюсь в процессы, продумываю архитектуру под текущие и будущие задачи.</p>
+                <div class="chat-bubble user">Нужно сделать надёжно и в срок</div>
+                <div class="chat-bubble bot">Сделаем качественно, с гарантией!</div>
+            </div>
+        </div>
+
+        <!-- CODE SECTION -->
+        <div class="code-section">
+            <div class="fade-in">
+                <h3 style="font-size: 1.8rem; margin-bottom: 20px; color: #b026ff;">
+                    Надёжные и быстрые решения
+                </h3>
+                <p style="color: var(--text-muted); line-height: 1.8; font-size: 1.05rem;">
+                    Пишу чистый, документированный код с понятной структурой и готовностью к росту. 
+                    Гарантия безупречного качества — абсолютная защита ваших данных.
+                </p>
+            </div>
+            <div class="code-window fade-in">
+                <span class="code-line"><span class="kw">const</span> express = <span class="func">require</span>(<span class="str">'express'</span>);</span>
+                <span class="code-line"><span class="kw">const</span> app = <span class="func">express</span>();</span>
+                <span class="code-line"><span class="kw">const</span> quality = <span class="str">'100%'</span>;</span>
+                <span class="code-line"><span class="kw">const</span> minOrder = <span class="num">20</span>;</span>
+                <span class="code-line"></span>
+                <span class="code-line">app.<span class="func">get</span>(<span class="str">'/order'</span>, (req, res) => {</span>
+                <span class="code-line">  res.<span class="func">json</span>({</span>
+                <span class="code-line">    status: <span class="str">'Success'</span>,</span>
+                <span class="code-line">    quality: quality,</span>
+                <span class="code-line">    minPrice: <span class="str">'$20 / 1500₽'</span>,</span>
+                <span class="code-line">    developer: <span class="str">'SlapotaG'</span></span>
+                <span class="code-line">  });</span>
+                <span class="code-line">});</span>
+                <span class="code-line"></span>
+                <span class="code-line">app.<span class="func">listen</span>(<span class="num">3000</span>);</span>
+            </div>
+        </div>
+
+        <!-- FOOTER CTA -->
+        <div class="footer-cta fade-in">
+            <div class="price-tag">💰 Минимальная стоимость заказа — от $20 / 1500₽</div>
+            <h2>Разговор на языке<br>цифр и сроков</h2>
+            <p>
+                В поисках надёжного исполнителя? Обращайтесь.<br>
+                Для крупных проектов возможна личная встреча оффлайн.
+            </p>
+            <!-- ✅ Эта кнопка уже была правильной -->
+            <a href="https://t.me/SlapotaG" target="_blank" class="btn-main">
+                <svg viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12s5.37 12 12 12 12-5.37 12-12S18.63 0 12 0zm5.53 8.15l-1.8 8.49c-.13.6-.5.75-.99.46l-2.75-2.02-1.33 1.28c-.15.15-.27.27-.56.27l.2-2.8 5.1-4.6c.22-.2-.05-.3-.34-.12l-6.3 3.96-2.71-.85c-.59-.18-.6-.59.12-.87l10.59-4.08c.49-.18.92.12.77.88z"/></svg>
+                Написать в Telegram
+            </a>
+        </div>
+
+    </div>
+
+    <script>
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+    </script>
+
+</body>
+</html>
